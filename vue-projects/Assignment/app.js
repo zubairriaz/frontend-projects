@@ -1,12 +1,25 @@
 const app = Vue.createApp({
   data() {
     return {
-      name: "Zubair",
-      age: "31",
-      random: Math.random(),
-      value: "test",
-      img: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=768:*",
+     counter:0,
+     name:'',
+     confirmName : ''
     };
   },
+  methods:{
+      increaseCounter(num){
+          this.counter = this.counter +  num;
+      },
+      decreaseCounter(){
+        this.counter--
+    },
+    setName(event){
+        this.name= event.target.value;
+    },
+    confirmInput(){
+        this.confirmName = this.name
+    }
+
+  }
 });
-app.mount("#assignment");
+app.mount("#events");
