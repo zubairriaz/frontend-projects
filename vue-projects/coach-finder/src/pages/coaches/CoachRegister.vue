@@ -1,12 +1,142 @@
 <template>
-  <h1>Coach Register</h1>
+  <section>
+    <base-card>
+      <h1>Register as a Coach</h1>
+    </base-card>
+    <base-card>
+      <div class="form-control">
+        <label for="firstName">First Name</label>
+        <input id="fistName" v-model="fistName" />
+      </div>
+      <div class="form-control">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" v-model="lastName" />
+      </div>
+      <div class="form-control">
+        <label for="description">Description</label>
+        <textarea id="description" v-model="description" rows="5" />
+      </div>
+
+      <div class="form-control">
+        <label for="hourlyRate">Hourly Rate</label>
+        <input type="number" id="hourlyRate" v-model="hourlyRate" />
+      </div>
+      <div class="form-control">
+        <label for="areas">Areas </label>
+        <div class="checkbox-display">
+          <div class="display-inline">
+            <input
+              type="checkbox"
+              id="areas"
+              value="frontend"
+              v-model="areas"
+            />
+            <span>Frontend</span>
+          </div>
+          <div class="display-inline">
+            <input type="checkbox" id="areas" value="backend" v-model="areas" />
+            <span>Back End</span>
+          </div>
+          <div class="display-inline">
+            <input type="checkbox" id="areas" value="career" v-model="areas" />
+            <span>Career</span>
+          </div>
+        </div>
+      </div>
+      <base-button @click="onSubmit">Submit</base-button>
+    </base-card>
+  </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import BaseCard from "@/components/ui/BaseCard.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'CoachRegister',
-
+  components: { BaseCard },
+  name: "CoachRegister",
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      hourlyRate: 0,
+      description: "",
+      areas: [],
+    };
+  },
+  methods:{
+    onSubmit(){
+      const formData = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        areas:this.areas,
+        description:this.description,
+        hourlyRate:this.hourlyRate
+      }
+      console.log(formData);
+    }
+  }
 });
 </script>
+
+<style scoped>
+.form-control {
+  margin: 0.5rem 0;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input[type="checkbox"] + label {
+  font-weight: normal;
+  display: inline;
+  margin: 0 0 0 0.5rem;
+}
+
+input,
+textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  font: inherit;
+}
+
+input:focus,
+textarea:focus {
+  background-color: #f0e6fd;
+  outline: none;
+  border-color: #3d008d;
+}
+
+input[type="checkbox"] {
+  display: inline;
+  width: auto;
+  border: none;
+}
+
+input[type="checkbox"]:focus {
+  outline: #3d008d solid 1px;
+}
+
+h3 {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.invalid label {
+  color: red;
+}
+
+.invalid input,
+.invalid textarea {
+  border: 1px solid red;
+}
+
+.display-inline {
+  display: flex;
+  flex-direction: row;
+}
+</style>

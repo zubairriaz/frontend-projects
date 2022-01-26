@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Coach, CoachState } from "../../interfaces/Coaches";
+import { Coach } from "../../interfaces/Coaches";
 import CoachItem from "../../components/components/Coaches/CoachItem.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import CoachFilter from "../../components/components/Coaches/CoachFilter.vue";
@@ -41,38 +41,41 @@ export default defineComponent({
     CoachFilter,
     BaseCard,
   },
-  data(){
-    return{
-    coaches : [] as Coach[] | []
-  }},
-  methods:{
-    onChangeFilter(filters : any){
-        const filterToApply = Object.keys(filters).filter(key=>filters[key] == true)
-        let updatedCoaches = this.coaches.filter(coach=>{
-          console.log(filterToApply)
-             if(filterToApply && filterToApply.length == 0){
-               return true
-             }
-             let {areas} = coach;
-             let j = 0;
-             while(filterToApply[j]){
-               if(areas.indexOf(filterToApply[j]) == -1){
-                 return false
-               }
-               j++
-             }
-             return true;
-        })
-        console.log(updatedCoaches);
-        this.coaches = updatedCoaches
-
-    }
+  data() {
+    return {
+      coaches: [] as Coach[] | [],
+    };
   },
-  created(){
-    this.coaches = this.$store.getters["coaches/getCoaches"];
+  methods: {
+    onChangeFilter(filters: any) {
+      const filterToApply = Object.keys(filters).filter(
+        (key) => filters[key] == true
+      );
+      let updatedCoaches = this.getCoaches.filter((coach) => {
+        if (filterToApply && filterToApply.length == 0) {
+          return true;
+        }
+        let { areas } = coach;
+        let j = 0;
+        while (filterToApply[j]) {
+          if (areas.indexOf(filterToApply[j]) == -1) {
+            return false;
+          }
+          j++;
+        }
+        return true;
+      });
+      console.log(updatedCoaches);
+      this.coaches = updatedCoaches;
+    },
+  },
+  created() {
+    this.coaches = this.getCoaches;
   },
   computed: {
-
+    getCoaches():Coach[] {
+      return this.$store.getters["coaches/getCoaches"];
+    },
     hasCoaches(): boolean {
       return this.$store.getters["coaches/hasCoaches"];
     },
