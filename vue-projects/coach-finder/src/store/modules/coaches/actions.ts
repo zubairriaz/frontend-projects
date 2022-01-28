@@ -1,4 +1,4 @@
-import { Coach, CoachState } from "@/interfaces/Coaches";
+import { Coach, CoachState, Message } from "@/interfaces/Coaches";
 import { ActionContext } from "vuex";
 
 export default {
@@ -6,5 +6,10 @@ export default {
         const userId: string = context.rootGetters.userId;
         context.commit('registerCoach', {userId, ...payload});
         
-    }
+    },
+    sendMesageToCoach(context:ActionContext<CoachState, CoachState>, payload:Message):void{
+        const coachId: string = context.rootGetters.userId;
+        context.commit('sendCoachMessage', { ...payload, coachId});
+        
+    },
 };

@@ -1,6 +1,7 @@
 import getters from './getter';
 import mutations from './mutations';
-import {CoachState} from '../../../interfaces/Coaches'
+import { CoachState} from '../../../interfaces/Coaches'
+import actions from './actions';
 
 
 export default {
@@ -27,8 +28,10 @@ export default {
           hourlyRate: 30
         }
       ],
+      messages:[]
     };
   },
   getters:getters,
-  mutations:mutations
+  mutations:mutations,
+  actions:actions
 };

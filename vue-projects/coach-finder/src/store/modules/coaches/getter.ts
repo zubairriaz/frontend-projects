@@ -1,4 +1,4 @@
-import { Coach, CoachState } from "../../../interfaces/Coaches";
+import { Coach, CoachState, Message } from "../../../interfaces/Coaches";
 export default {
   getCoaches(state: CoachState): Coach[] {
     return state.coaches;
@@ -10,6 +10,9 @@ export default {
 
   isCoach(state:CoachState, getters : any, rootState : any, rootGetters: any): void{
        return getters.getCoaches.some((coach:Coach)=>coach.id ==rootGetters.userId )
+  },
+  getMessages(state: CoachState): Array<Message>{
+    return state.messages;
   }
 
 

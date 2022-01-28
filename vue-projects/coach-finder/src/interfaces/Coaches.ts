@@ -1,5 +1,6 @@
 export type CoachState = {
     coaches: Array<Coach>;
+    messages: Array<Message>;
   }
   export type Coach = {
       name?:string,
@@ -12,12 +13,18 @@ export type CoachState = {
   
   }
 
+  export type Message={
+      email: string,
+      message:string,
+      coachId: string
+  }
+
 
  export type Items = {
     [key: string]: boolean | string;
   }
   
-  type FormItemValue = {
+  export type FormItemValue = {
       val : string | string[] | number,
       isValid: boolean
   }

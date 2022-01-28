@@ -82,7 +82,7 @@ export default defineComponent({
         hourlyRate: this.state.hourlyRate.val,
       };
       console.log(formData);
-      this.$store.commit("coaches/registerCoach", formData);
+      this.$store.dispatch("coaches/registerCoach", formData);
       this.$router.replace("/coaches");
     },
     resetValidation(event : any){

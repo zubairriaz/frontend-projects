@@ -5,9 +5,9 @@ export const store = createStore({
     modules:{
         coaches: coachesModule
     },
-    state(){
+    state(): any {
         return {
             userId : 'c3'
-        } as {userId:string}
+        }
     }
 })
