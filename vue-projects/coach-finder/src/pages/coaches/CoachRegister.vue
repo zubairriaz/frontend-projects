@@ -4,24 +4,24 @@
       <h1>Register as a Coach</h1>
     </base-card>
     <base-card>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid:!state.firstName.isValid}">
         <label for="firstName">First Name</label>
-        <input id="fistName" v-model="fistName" />
+        <input id="firstName" v-model="state.firstName.val" @focus="resetValidation" />
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid:!state.lastName.isValid}">
         <label for="lastName">Last Name</label>
-        <input id="lastName" v-model="lastName" />
+        <input id="lastName" v-model="state.lastName.val" @focus="resetValidation" />
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid:!state.description.isValid}">
         <label for="description">Description</label>
-        <textarea id="description" v-model="description" rows="5" />
+        <textarea id="description" v-model="state.description.val" rows="5" @focus="resetValidation" />
       </div>
 
-      <div class="form-control">
+      <div class="form-control" :class="{invalid:!state.hourlyRate.isValid}">
         <label for="hourlyRate">Hourly Rate</label>
-        <input type="number" id="hourlyRate" v-model="hourlyRate" />
+        <input type="number" id="hourlyRate" v-model="state.hourlyRate.val"  @focus="resetValidation"/>
       </div>
-      <div class="form-control">
+      <div class="form-control" :class="{invalid:!state.areas.isValid}">
         <label for="areas">Areas </label>
         <div class="checkbox-display">
           <div class="display-inline">
@@ -29,16 +29,17 @@
               type="checkbox"
               id="areas"
               value="frontend"
-              v-model="areas"
+              v-model="state.areas.val"
+              @focus="resetValidation"
             />
             <span>Frontend</span>
           </div>
           <div class="display-inline">
-            <input type="checkbox" id="areas" value="backend" v-model="areas" />
+            <input type="checkbox" id="areas" value="backend" v-model="state.areas.val" />
             <span>Back End</span>
           </div>
           <div class="display-inline">
-            <input type="checkbox" id="areas" value="career" v-model="areas" />
+            <input type="checkbox" id="areas" value="career" v-model="state.areas.val" />
             <span>Career</span>
           </div>
         </div>
@@ -50,6 +51,7 @@
 
 <script lang="ts">
 import BaseCard from "@/components/ui/BaseCard.vue";
+import { FormItems } from "@/interfaces/Coaches";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -57,25 +59,53 @@ export default defineComponent({
   name: "CoachRegister",
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      hourlyRate: 0,
-      description: "",
-      areas: [],
+      state: {
+        firstName: { val: "", isValid: true },
+        lastName: { val: "", isValid: true },
+        hourlyRate: { val: 0, isValid: true },
+        description: { val: "", isValid: true },
+        areas: { val: [], isValid: true },
+      } as FormItems,
     };
   },
-  methods:{
-    onSubmit(){
-      const formData = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        areas:this.areas,
-        description:this.description,
-        hourlyRate:this.hourlyRate
+  methods: {
+    onSubmit() {
+      const isValid = this.validateForm();
+      if(!isValid){
+        return
       }
+      const formData = {
+        firstName: this.state.firstName.val,
+        lastName: this.state.lastName.val,
+        areas: this.state.areas.val,
+        description: this.state.areas.val,
+        hourlyRate: this.state.hourlyRate.val,
+      };
       console.log(formData);
-    }
-  }
+      this.$store.commit("coaches/registerCoach", formData);
+      this.$router.replace("/coaches");
+    },
+    resetValidation(event : any){
+        let field = event.target.id;
+        console.log(field)
+        this.state[field].isValid = true
+    },
+    validateForm(): boolean {
+      const mapArray = Object.keys(this.state).map((key: string) => {
+        let value = this.state[key].val;
+        if (Array.isArray(value) && value.length == 0 || !value) {
+          this.state[key].isValid = false
+          return false
+        }
+        else{
+          return true
+        }
+      });
+
+
+      return mapArray.every(x=>x== true);
+    },
+  },
 });
 </script>
 

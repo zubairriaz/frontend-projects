@@ -8,10 +8,9 @@
 </template>
 
 <script lang="ts">
-interface Items {
-  [key: string]: boolean | string;
-}
+
 import { defineComponent } from "vue";
+import {Items} from 'src/interfaces/Coaches';
 
 export default defineComponent({
   emits: ['change-filters'],

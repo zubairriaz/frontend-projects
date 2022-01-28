@@ -1,7 +1,7 @@
-export interface CoachState {
-    coaches: Coach[] | [];
+export type CoachState = {
+    coaches: Array<Coach>;
   }
-  export interface Coach{
+  export type Coach = {
       name?:string,
       id?: string,
       firstName:string,
@@ -13,4 +13,16 @@ export interface CoachState {
   }
 
 
+ export type Items = {
+    [key: string]: boolean | string;
+  }
+  
+  type FormItemValue = {
+      val : string | string[] | number,
+      isValid: boolean
+  }
+  export type FormItems = {
+    [key: string]: FormItemValue;
+    
+  }
   

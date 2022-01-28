@@ -8,7 +8,7 @@
     <base-card>
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
-        <base-button link="true" to="/register">Register as Coach</base-button>
+        <base-button v-if="!isCoach" link="true" to="/register">Register as Coach</base-button>
       </div>
       <ul v-if="hasCoaches">
         <coach-item
@@ -32,6 +32,7 @@ import CoachItem from "../../components/components/Coaches/CoachItem.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import CoachFilter from "../../components/components/Coaches/CoachFilter.vue";
 import BaseCard from "@/components/ui/BaseCard.vue";
+import {Items} from "../../interfaces/Coaches";
 
 export default defineComponent({
   name: "CoachesList",
@@ -47,7 +48,7 @@ export default defineComponent({
     };
   },
   methods: {
-    onChangeFilter(filters: any) {
+    onChangeFilter(filters: Items) {
       const filterToApply = Object.keys(filters).filter(
         (key) => filters[key] == true
       );
@@ -70,7 +71,7 @@ export default defineComponent({
     },
   },
   created() {
-    this.coaches = this.getCoaches;
+    this.coaches = this.getCoaches
   },
   computed: {
     getCoaches():Coach[] {
@@ -79,6 +80,10 @@ export default defineComponent({
     hasCoaches(): boolean {
       return this.$store.getters["coaches/hasCoaches"];
     },
+    isCoach():boolean{
+            return this.$store.getters["coaches/isCoach"];
+ 
+    }
   },
 });
 </script>
