@@ -27,7 +27,8 @@ export default defineComponent({
       return (email: string)=> 'mailto:'+ email
     }
   },
-  created(){
+  async created(){
+    await this.$store.dispatch('coaches/loadCoachMessages')
     const messages = this.$store.getters['coaches/getMessages']
     this.requests = messages;
   }

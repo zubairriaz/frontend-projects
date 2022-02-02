@@ -5,9 +5,14 @@ export const store = createStore({
     modules:{
         coaches: coachesModule
     },
-    state(): any {
+    state() {
         return {
             userId : 'c3'
+        } as {userId: string}
+    },
+    getters:{
+        getUserId(state){
+            return state.userId;
         }
     }
 })

@@ -78,7 +78,7 @@ export default defineComponent({
         firstName: this.state.firstName.val,
         lastName: this.state.lastName.val,
         areas: this.state.areas.val,
-        description: this.state.areas.val,
+        description: this.state.description.val,
         hourlyRate: this.state.hourlyRate.val,
       };
       console.log(formData);

@@ -2,6 +2,10 @@ export type CoachState = {
     coaches: Array<Coach>;
     messages: Array<Message>;
   }
+
+  export type RootState = {
+      userId: string
+  }
   export type Coach = {
       name?:string,
       id?: string,
