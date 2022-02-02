@@ -81,7 +81,6 @@ export default defineComponent({
         description: this.state.description.val,
         hourlyRate: this.state.hourlyRate.val,
       };
-      console.log(formData);
       this.$store.dispatch("coaches/registerCoach", formData);
       this.$router.replace("/coaches");
     },
