@@ -1,36 +1,10 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import * as esbuild from "esbuild-wasm";
-export const unpkgPathPlugin = () => {
-  return {
-    name: 'unpkg-path-plugin',
-    setup(build: esbuild.PluginBuild) {
-      build.onResolve({ filter: /.*/ }, async (args: any) => {
-        console.log('onResole', args);
-        return { path: args.path, namespace: 'a' };
-      });
- 
-      build.onLoad({ filter: /.*/ }, async (args: any) => {
-        console.log('onLoad', args);
- 
-        if (args.path === 'index.js') {
-          return {
-            loader: 'jsx',
-            contents: `
-              import message from './message';
-              console.log(message);
-            `,
-          };
-        } else {
-          return {
-            loader: 'jsx',
-            contents: 'export default "hi there!"',
-          };
-        }
-      });
-    },
-  };
-};
+import {unpkgPathPlugin} from './plugin/unpkgPathPlugin'
+
+
 
 const App: React.FC = () => {
   const [input, setInput] = useState("");
@@ -55,14 +29,19 @@ const App: React.FC = () => {
       return;
     }
     const result = await esbuild.build({
-      plugins:[unpkgPathPlugin()],
+      plugins:[unpkgPathPlugin(input)],
       entryPoints:['index.js'],
       bundle:true,
-      write:false
+      write:false,
+      define:{
+        'process.env.NODE_ENV':'"production"',
+        'global':'window'
+      }
     });
     // const { code } = result;
     // setOutput(code);
-    console.log(result);
+    const {outputFiles} = result;
+    setOutput(outputFiles[0].text)
   };
   return (
     <div className="App">
